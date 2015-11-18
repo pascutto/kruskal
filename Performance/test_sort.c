@@ -1,4 +1,4 @@
-#include "sort.c"
+#include "sort.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -21,7 +21,7 @@ double test(minLength) {
     }
     
     begin = clock();
-    sort(v, n, minLength);
+    test_sort(v, n, minLength);
     end = clock();
      
     /*int ok = 1;
@@ -41,7 +41,7 @@ int main() {
         double tot = 0;
         int t = 0;
         
-        for (t = 0; t < 100; ++t)
+        for (t = 0; t < 50; ++t)
             tot += test(minLength);
         
         printf("%d,%lf\n", minLength, tot / 100.);
