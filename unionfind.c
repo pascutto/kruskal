@@ -11,9 +11,13 @@ int merge(int* parent, int* rank, int x, int y) {
 	int ry = find(parent, y);
 	if (rx == ry) 
 		return 0;
-	if (rank[x] < rank[y])
+	if (rank[rx] < rank[ry]) {
+		rank[ry] += rank[rx];
 		parent[rx] = ry;
-	else 
+	}
+	else {
+		rank[rx] += rank[ry];
 		parent[ry] = rx;
+	}
 	return 1;
 }
