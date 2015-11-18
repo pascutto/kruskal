@@ -10,6 +10,9 @@ graph read_from_file(char* fileName) {
     
     list adj[n];
     int i;
+    for (i = 0; i < n; ++i)
+        adj[i] = NULL;
+
     for (i = 0; i < m; ++i) {
         int st, end;
         double w;
@@ -35,3 +38,26 @@ graph read_from_file(char* fileName) {
     return *g;
 }
 
+edge* edge_list_of_graph(graph* g) {
+    edge* v = malloc(g->m * sizeof(edge));
+    
+    int pc = 0;
+    
+    int i;
+    for (i = 0; i < g->n; ++i) {
+        elem* current = g->adj[i];
+
+        for (current; current != NULL; current = current->next)
+            if (current->y >= i) {
+                edge* e = malloc(sizeof(edge));
+                e->x = i;
+                e->y = current->y;
+                e->w = current->w;
+                v[pc] = *e;
+                pc++;
+            }
+                
+    }
+    
+    return v;
+}
