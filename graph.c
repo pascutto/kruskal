@@ -1,7 +1,2 @@
-typedef struct {
-	int x;
-	int y;
-	double w;
-} edge;
-
+#include "graph.h"
 
