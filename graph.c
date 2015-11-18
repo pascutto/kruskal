@@ -38,7 +38,7 @@ graph read_from_file(char* fileName) {
     return *g;
 }
 
-edge* edge_list_of_graph(graph* g) {
+edge* edge_array_of_graph(graph* g) {
     edge* v = malloc(g->m * sizeof(edge));
     
     int pc = 0;

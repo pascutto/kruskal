@@ -24,5 +24,6 @@ typedef struct {
 } graph;
 
 graph graph_from_file(char* fileName);
-edge* edge_list_of_graph(graph* g);
+edge* edge_array_of_graph(graph* g);
+
 #endif
