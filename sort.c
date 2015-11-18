@@ -1,5 +1,3 @@
-#include <time.h>
-#include <stdlib.h>
 #include "sort.h"
 
 const int kMinLength = 30;
@@ -10,16 +8,33 @@ void swap(edge* v, int i, int j) {
 	v[j] = aux;
 }
 
-void quick_sort(edge* v, int left, int right) {
+int median_of_three(edge* v, int left, int right) {
+    int r1 = left;
+    int r2 = (left + right) / 2;
+    int r3 = right;
+
+    if (v[r1].w > v[r2].w)
+        swap(v, r1, r2);
+
+    if (v[r2].w > v[r3].w)
+        swap(v, r2, r3);
+
+    if (v[r1].w > v[r2].w)
+        swap(v, r1, r2);
+
+    return r2;
+}
+
+void quick_sort(edge* v, int left, int right, int minLength) {
 	if (left < right) {
-		if (right - left + 1 < kMinLength)
+		if (right - left + 1 < minLength)
 			insertion_sort(v, left, right);
 		else {
-			int r = rand() % (right - left + 1) + left;
+			int r = median_of_three(v, left, right);
 			swap(v, right, r);
 			int p = partition(v, left, right);
-			quick_sort(v, left, p - 1);
-			quick_sort(v, p + 1, right);
+			quick_sort(v, left, p - 1, minLength);
+			quick_sort(v, p + 1, right, minLength);
 		}
 	}
 }
@@ -27,8 +42,8 @@ void quick_sort(edge* v, int left, int right) {
 int partition(edge* v, int left, int right) {
 	edge pivot = v[right]; 
 	int i = left;
-	int j;
-	for(j = left; j < right; j++)
+    int j;
+	for (j = left; j < right; j++)
 		if (v[j].w <= pivot.w) {
 			swap(v, i, j);
 			i++;
@@ -39,7 +54,7 @@ int partition(edge* v, int left, int right) {
 
 void insertion_sort(edge* v, int left, int right) {
 	int i;
-	for(i = left; i <= right; i++) {
+	for (i = left; i <= right; i++) {
 		edge x = v[i];
 		int j = i;
 		while (j > left && v[j - 1].w > x.w) {
@@ -50,7 +65,10 @@ void insertion_sort(edge* v, int left, int right) {
 	}
 }
 
+void test_sort(edge* v, int length, int minLength) {
+    quick_sort(v, 0, length - 1, minLength);
+}
+
 void sort(edge* v, int length) {
-	srand(time(NULL));
-	quick_sort(v, 0, length - 1);
+	quick_sort(v, 0, length - 1, kMinLength);
 }
