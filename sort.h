@@ -3,9 +3,9 @@
 
 #include "graph.h"
 
-void sort(edge*, int);
-void swap(edge*, int, int);
-void insertion_sort(edge*, int, int);
-void quick_sort(edge*, int, int);
+void sort(edge* v, int length);
+void swap(edge* v, int i, int j);
+void insertion_sort(edge* v, int left, int right);
+void quick_sort(edge* v, int left, int right);
 
 #endif
