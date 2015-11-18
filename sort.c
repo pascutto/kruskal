@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "sort.h"
 
-const int kMinLength = 75;
+const int kMinLength = 30;
 
 void swap(edge* v, int i, int j) {
 	edge aux = v[i];

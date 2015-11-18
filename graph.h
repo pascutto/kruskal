@@ -7,4 +7,20 @@ typedef struct {
 	double w;
 } edge;
 
+struct elem {
+    int y;
+    double w;
+    struct elem* next;
+};
+
+typedef struct elem elem;
+
+typedef elem* list;
+
+typedef struct {
+    int n;
+    int m;
+    list* adj;
+} graph;
+
 #endif
