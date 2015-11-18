@@ -40,11 +40,13 @@ int partition(edge* v, int left, int right) {
 void insertion_sort(edge* v, int left, int right) {
 	int i;
 	for(i = left; i <= right; i++) {
+		edge x = v[i];
 		int j = i;
-		while (j > left && v[j - 1].w > v[j].w) {
-			swap(v, j - 1, j);
+		while (j > left && v[j - 1].w > x.w) {
+			v[j] = v[j - 1];
 			j--;
 		}
+		v[j] = x;
 	}
 }
 
