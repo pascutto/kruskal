@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "sort.h"
 
-const int kMinLength = 100;
+const int kMinLength = 75;
 
 void swap(edge* v, int i, int j) {
 	edge aux = v[i];
@@ -16,24 +16,24 @@ void quick_sort(edge* v, int left, int right) {
 			insertion_sort(v, left, right);
 		else {
 			int r = rand() % (right - left + 1) + left;
-			swap(v, left, r);
+			swap(v, right, r);
 			int p = partition(v, left, right);
-			quick_sort(v, left, p-1);
-			quick_sort(v, p+1, right);
+			quick_sort(v, left, p - 1);
+			quick_sort(v, p + 1, right);
 		}
 	}
 }
 
 int partition(edge* v, int left, int right) {
-	edge pivot = v[left]; 
-	int i = left + 1;
+	edge pivot = v[right]; 
+	int i = left;
 	int j;
-	for(j = left + 1; j <= right; j++)
-		if (v[i].w > pivot.w) {
+	for(j = left; j < right; j++)
+		if (v[j].w <= pivot.w) {
 			swap(v, i, j);
 			i++;
 		}
-	swap(v, left, i);
+	swap(v, right, i);
 	return i;	
 }
 
