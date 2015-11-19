@@ -37,11 +37,11 @@ int main() {
 
     freopen("sort_perf.csv", "w", stdout);
 
-    for (minLength = 0; minLength <= 200; minLength += 10) {
+    for (minLength = 0; minLength <= 200; minLength ++) {
         double tot = 0;
         int t = 0;
         
-        for (t = 0; t < 50; ++t)
+        for (t = 0; t < 100; ++t)
             tot += test(minLength);
         
         printf("%d,%lf\n", minLength, tot / 100.);
