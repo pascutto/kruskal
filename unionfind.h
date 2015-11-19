@@ -1,7 +1,14 @@
 #ifndef _UNIONFIND_HEADER_
 #define _UNIONFIND_HEADER_
 
-int find(int* parent, int x);
-int merge(int* parent, int* rank, int x, int y);
+typedef struct {
+	int n;
+	int* parent;
+	int* rank;
+} unionfind;
+
+unionfind new_uf(int n);
+int find(unionfind* uf, int x);
+int merge(unionfind* uf, int x, int y);
 
 #endif

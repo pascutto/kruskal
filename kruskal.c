@@ -4,18 +4,14 @@
 #include <stdlib.h>
 
 edge* kruskal_edges(int n, int m, edge* v) {
-	int parent[n];
-	int rank[n];
-	int i;
-	for(i = 0; i < n; i++) {
-		parent[i] = -1;
-		rank[i] = 1;
-	}
+	unionfind uf;
+    uf = new_uf(n);
 	sort(v, m);
 	edge* ans = malloc((n - 1) * sizeof(edge));
 	int pos = 0;
+	int i;
 	for(i = 0; i < m; i++) 
-		if (merge(parent, rank, v[i].x, v[i].y)) {
+		if (merge(&uf, v[i].x, v[i].y)) {
 			ans[pos] = v[i];
 			pos++;
 		}
