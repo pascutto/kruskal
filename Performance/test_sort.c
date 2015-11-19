@@ -1,4 +1,4 @@
-#include "sort.c"
+#include "sort.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -21,7 +21,7 @@ double test(minLength) {
     }
     
     begin = clock();
-    sort(v, n, minLength);
+    test_sort(v, n, minLength);
     end = clock();
      
     /*int ok = 1;
@@ -37,7 +37,7 @@ int main() {
 
     freopen("sort_perf.csv", "w", stdout);
 
-    for (minLength = 0; minLength <= 200; minLength += 10) {
+    for (minLength = 0; minLength <= 200; minLength ++) {
         double tot = 0;
         int t = 0;
         
