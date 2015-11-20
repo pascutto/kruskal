@@ -5,49 +5,47 @@
 #include "error.h"
 #include "sort.h"
 
-int uniformDistrib(int min, int max)
+int uniformDistribInt(int min, int max)
 {
-    static int init = 0;
-    if(init==0)
-    {
-        srand((unsigned int)time(0));
-        init = 1;
-    }
-
-    return rand()/((double)(RAND_MAX+1)/(double)(max-min))+min;
+    return (int)(rand() / (double)rand_max) * (max - min) + min
 }
 
-id* distinctRandomNumbers(id min, id max, id nbElems)
+double uniformDistribDouble(double min, double max)
 {
-    id l = max-min;
+    return (rand() / (double)rand_max) * (max - min) + min
+}
 
-    id* tab;
-    tab = malloc(sizeof(id)*l);
+int* distinctRandomNumbers(int min, int max, int nbElems)
+{
+    int l = max-min;
+
+    int* tab;
+    tab = malloc(sizeof(int)*l);
     if(tab==NULL)
         error("Impossible d'allouer le tableau de nombres distincts");
 
     //create a array with the elements 0..(l-1)
-    for(id i=0; i<l; ++i)
+    for(int i=0; i<l; ++i)
     {
         tab[i] = i+min;
     }
 
     //shuffling the array
-    for(id i=0; i<l; ++i)
+    for(int i=0; i<l; ++i)
     {
-        id j = uniformDistrib(0, l);
-        id tmp = tab[i];
+        int j = uniformDistrib(0, l);
+        int tmp = tab[i];
         tab[i] = tab[j];
         tab[j] = tmp;
     }
 
-    return (id*)realloc(tab, sizeof(id)*nbElems);
+    return (int*)realloc(tab, sizeof(int)*nbElems);
 }
 
 unsigned int binomialDistrib(unsigned int n, double p)
 {
     unsigned int s=0;
-    for(id i=0; i<n; ++i)
+    for(int i=0; i<n; ++i)
     {
         if( (double)uniformDistrib(0, RAND_MAX) <= ((double)RAND_MAX * p))
             ++s;
