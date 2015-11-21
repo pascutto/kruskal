@@ -5,12 +5,12 @@
 
 edge* kruskal_edges(int n, int m, edge* v) {
 	unionfind uf;
-    uf = new_uf(n);
+	uf = new_uf(n);
 	sort(v, m);
 	edge* ans = malloc((n - 1) * sizeof(edge));
 	int pos = 0;
 	int i;
-	for(i = 0; i < m; i++) 
+	for(i = 0; i < m; i++)
 		if (merge(&uf, v[i].x, v[i].y)) {
 			ans[pos] = v[i];
 			pos++;
