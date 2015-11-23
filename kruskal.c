@@ -2,6 +2,7 @@
 #include "sort.h"
 #include "unionfind.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 edge* kruskal_edges(int n, int m, edge* v) {
 	unionfind uf;
@@ -16,7 +17,7 @@ edge* kruskal_edges(int n, int m, edge* v) {
 			pos++;
 		}
 	return ans;
-}
+}   
 
 edge* kruskal_graph(graph* g) {
 	return kruskal_edges(g->n, g->m, edge_array_of_graph(g));

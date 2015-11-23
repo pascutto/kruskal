@@ -2,40 +2,42 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-graph read_from_file(char* fileName) {
+graph* read_from_file(char* fileName) {
     FILE *fin = fopen(fileName, "r");
     
     int n, m;
     fscanf(fin, "%d%d", &n, &m);
     
-    list adj[n];
+    list *adj = malloc(n * sizeof(elem));
     int i;
     for (i = 0; i < n; ++i)
         adj[i] = NULL;
-
+    
     for (i = 0; i < m; ++i) {
         int st, end;
         double w;
-        scanf("%d%d%lf", &st, &end, &w);
+        fscanf(fin, "%d%d%lf", &st, &end, &w);
         
         elem* n1 = malloc(sizeof(elem));
         n1->y = end;
+        n1->w = w;
         n1->next = adj[st];
         adj[st] = n1;
         elem* n2 = malloc(sizeof(elem));
         n2->y = st;
+        n2->w = w;
         n2->next = adj[end];
         adj[end] = n2;
     }
     
     fclose(fin);
 
-    graph* g = malloc(sizeof(elem));
+    graph* g = malloc(sizeof(graph));
     g->n = n;
     g->m = m;
     g->adj = adj;
 
-    return *g;
+    return g;
 }
 
 edge* edge_array_of_graph(graph* g) {
