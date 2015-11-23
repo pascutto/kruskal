@@ -1,11 +1,21 @@
+#include "error.h"
 #include "unionfind.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 unionfind new_uf(int n) {
-	unionfind* uf = malloc(sizeof(unionfind));
-	int* parent = malloc(n * sizeof(int));
-	int* rank = malloc(n * sizeof(int));
+	unionfind* uf = NULL;
+	uf = malloc(sizeof(unionfind));
+	check_alloc(uf);
+	
+	int* parent = NULL;
+    parent = malloc(n * sizeof(int));
+	check_alloc(parent);
+	
+	int* rank = NULL;
+	rank = malloc(n * sizeof(int));
+	check_alloc(rank);
+
 	int i;
 	for(i = 0; i < n; i++) {
 		parent[i] = -1;

@@ -1,4 +1,5 @@
 #include "graph.h"
+#include "error.h"
 #include "sort.h"
 #include "unionfind.h"
 #include <stdlib.h>
@@ -8,7 +9,11 @@ edge* kruskal_edges(int n, int m, edge* v) {
 	unionfind uf;
 	uf = new_uf(n);
 	sort(v, m);
-	edge* ans = malloc((n - 1) * sizeof(edge));
+
+	edge* ans = NULL;
+    ans = malloc((n - 1) * sizeof(edge));
+	check_alloc(ans);
+	
 	int pos = 0;
 	int i;
 	for(i = 0; i < m; i++)
