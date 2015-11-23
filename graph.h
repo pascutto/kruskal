@@ -23,7 +23,7 @@ typedef struct {
     list* adj;
 } graph;
 
-graph graph_from_file(char* fileName);
+graph* graph_from_file(char* fileName);
 edge* edge_array_of_graph(graph* g);
 
 #endif
