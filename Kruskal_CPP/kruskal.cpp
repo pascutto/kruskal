@@ -12,6 +12,7 @@ int compress(int node) {
 
 int main() {
     freopen("test.in", "r", stdin);
+    freopen("test.ok", "w", stdout);
 
     int n, m;
     scanf("%d%d", &n, &m);
@@ -49,10 +50,11 @@ int main() {
         }
     } 
 
-    printf("%lf\n%d\n", ans, (int)v.size());
+    printf("%lf\n", ans);
+    /*printf("%d\n", (int)v.size());
 
     for (int i = 0; i < v.size(); ++i)
-        printf("%d %d\n", v[i].first, v[i].second);
+        printf("%d %d\n", v[i].first, v[i].second); */
 
     return 0;
 }
