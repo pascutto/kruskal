@@ -87,3 +87,23 @@ edge* edge_array_of_graph(graph* g) {
     
     return v;
 }
+
+void free_list(list l) {
+    while (l != NULL) {
+        list aux = l -> next;
+        free(l);
+        l = aux;
+    }
+}
+
+void free_graph(graph* g) {
+    int i;
+    for (i = 0; i < g->n; ++i)
+        free_list(g->adj[i]);
+    free(g->adj);
+    free(g);
+}
+
+void free_edges(edge* ed) {
+    free(ed);
+}

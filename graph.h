@@ -26,5 +26,8 @@ typedef struct {
 
 graph* read_from_file(char* fileName);
 edge* edge_array_of_graph(graph* g);
+void free_list(list l);
+void free_graph(graph* g);
+void free_edges(edge* ed);
 
 #endif
