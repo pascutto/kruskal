@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <algorithm>
 #include <vector>
+#include <string.h>
 
 using namespace std;
 
@@ -10,9 +11,23 @@ int compress(int node) {
     return (parent[node] == -1 ? node : parent[node] = compress(parent[node]));
 }
 
-int main() {
-    freopen("test.in", "r", stdin);
-    freopen("test.ok", "w", stdout);
+int main(int argc, char* argv[]) {
+    if (argc != 2) {
+		fprintf(stderr, "Missing argument : file name required.\n");
+		exit(EXIT_FAILURE);
+	}
+	
+	
+	if (!(freopen(argv[1], "r", stdin))) {
+		fprintf(stderr, "Unable to open file.\n");
+		exit(EXIT_FAILURE);
+	}	
+	argv[1][(strlen(argv[1]))-2] = 'o';
+	argv[1][(strlen(argv[1]))-1] = 'k';
+	if (!(freopen(argv[1], "w", stdout))) {
+		fprintf(stderr, "Unable to write file.\n");
+		exit(EXIT_FAILURE);
+	}
 
     int n, m;
     scanf("%d%d", &n, &m);
