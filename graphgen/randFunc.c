@@ -7,7 +7,7 @@
 
 int uniformDistribInt(int min, int max)
 {
-    return (int)(rand() / (double)RAND_MAX) * (max - min) + min;
+    return (int)((rand() / (double)RAND_MAX) * (max - min)) + min;
 }
 
 double uniformDistribDouble(double min, double max)
