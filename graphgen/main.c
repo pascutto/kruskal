@@ -5,28 +5,27 @@
 #include "randFunc.h"
 #include "error.h"
 
-typedef size_t id;
-
 ///adjacency list for a node
 typedef struct
 {
-    id s,t;
-    unsigned int weight;
-}Edge;
+    int x, y;
+    double w;
+} edge;
 
 ///represents a graph by adjacency lists
 typedef struct
 {
-    id nbVertice, nbEdges;
-    Edge *edges;
-}Graph;
+    int n, m;
+    edge *edges;
+} graph;
 
 ///return whether or not the edge e is already present in the array tab
-int find(Edge e, Edge *tab, id nbE)
+int find(edge e, edge *tab, int m)
 {
-    for(id i=0; i<nbE; ++i)
+    int i;
+    for(i=0; i<m; ++i)
     {
-        if((e.s==tab[i].s && e.t==tab[i].t) || (e.s==tab[i].t && e.t==tab[i].s))
+        if((e.x==tab[i].x && e.y==tab[i].y) || (e.x==tab[i].y && e.y==tab[i].x))
             return 1;
     }
     return 0;
@@ -34,49 +33,51 @@ int find(Edge e, Edge *tab, id nbE)
 
 
 ///create a random graph
-Graph createGraph(id nbV, id nbE, unsigned int meanWeight, unsigned int maxWeight)
+graph createGraph(int n, int m, double minWeight, double maxWeight)
 {
-    Graph graph;
+    graph graph;
 
-    graph.nbVertice = nbV;
-    graph.nbEdges = 0;
+    graph.n = n;
+    graph.m = 0;
+    
+    int i;
 
     //allocate the memory for the adjacency lists
-    graph.edges = malloc(sizeof(Edge)*nbE);
+    graph.edges = malloc(sizeof(edge)*m);
     if(graph.edges==NULL)
         error("Impossible d'allouer le graphe");
 
     //sparse graphs
-    if(nbE<nbV*sqrt(nbV))
+    if(m<n*sqrt(n))
     {
         //for each edge, generate it randomly, then verify there are no collisions with the previous ones: if there are, choose another edge and restart
-        for(id i=0; i<nbE; ++i)
+        for(i=0; i<m; ++i)
         {
-            Edge e;
+            edge e;
             do
             {
-                e.s = uniformDistrib(0, nbV);
-                e.t = uniformDistrib(0, nbV);
-            }while(find(e, graph.edges, graph.nbEdges));
+                e.x = uniformDistribInt(0, n - 1);
+                e.y = uniformDistribInt(0, n - 1);
+            }while(find(e, graph.edges, graph.m));
 
-            e.weight = binomialDistrib(maxWeight, (double)meanWeight/maxWeight);
+            e.w = uniformDistribDouble(minWeight, maxWeight);
 
-            graph.edges[graph.nbEdges] = e;
-            ++graph.nbEdges;
+            graph.edges[graph.m] = e;
+             ++graph.m;
         }
     }
     else //dense graphs
     {
         //generate an array of nbE distinct edges, and add them to graph
-        id* tab = distinctRandomNumbers(0, nbV*nbV, nbE);
+        id* tab = distinctRandomNumbers(0, n*n, m);
 
-        for(id i=0; i<nbE; ++i)
+        for(i=0; i<m; ++i)
         {
-            graph.edges[i].s = tab[i]%nbV;
-            graph.edges[i].t = tab[i]/nbV;
-            graph.edges[i].weight = binomialDistrib(maxWeight, (double)meanWeight/maxWeight);
+            graph.edges[i].x = tab[i]%n;
+            graph.edges[i].y = tab[i]/n;
+            graph.edges[i].w = uniformDistribDouble(minWeight, maxWeight);
         }
-        graph.nbEdges = nbE;
+        graph.m = m;
 
         free(tab);
     }
@@ -85,33 +86,35 @@ Graph createGraph(id nbV, id nbE, unsigned int meanWeight, unsigned int maxWeigh
 }
 
 ///free the memory of the graph
-void destroyGraph(Graph graph)
+void destroyGraph(graph graph)
 {
     free(graph.edges);
 }
 
 
 ///format the graph to the requested format and print it
-void printGraph(Graph graph)
+void printGraph(graph graph)
 {
-    printf("%i %i\n", graph.nbVertice, graph.nbEdges);
-    for(id i=0; i<graph.nbEdges; ++i)
+    printf("%d %d\n", graph.n, graph.m);
+    int i;
+    for(i=0; i<graph.m; ++i)
     {
-        printf("%u %u %u\n", graph.edges[i].s, graph.edges[i].t, graph.edges[i].weight);
+        printf("%d %d %lf\n", graph.edges[i].x, graph.edges[i].y, graph.edges[i].w);
     }
 }
 
 ///format a graph for graphviz
-void printDot(Graph g, int w)
+void printDot(graph g, int w)
 {
     printf("graph g {\n");
     printf("node [color=blue4 fillcolor=azure1 style=filled fontsize=16 fontcolor=blue3]\n");
     printf("edge [color=darkgreen, fontcolor=red4]\n");
 
-    for(size_t i=0; i<g.nbEdges; ++i)
+    int i;
+    for(i=0; i<g.m; ++i)
     {
-        if(w) printf("%u--%u [label=%u]\n", g.edges[i].s, g.edges[i].t, g.edges[i].weight);
-        else  printf("%u--%u\n", g.edges[i].s, g.edges[i].t);
+        if(w) printf("%d--%d [label=%lf]\n", g.edges[i].x, g.edges[i].y, g.edges[i].w);
+        else  printf("%d--%d\n", g.edges[i].x, g.edges[i].y);
     }
 
     printf("}\n");
@@ -121,11 +124,12 @@ int main(int argc, char **argv)
 {
     if(argc!=5)
     {
-        printf("Usage: graphgen nbVertice nbEdges meanWeight maxWeight\n");
+        printf("Usage: graphgen nbVertice nbEdges minWeight maxWeight\n");
     }
     else
     {
-        Graph graph = createGraph(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
+        srand(time(NULL));
+        graph graph = createGraph(atoi(argv[1]), atoi(argv[2]), atof(argv[3]), atof(argv[4]));
 
         printGraph(graph);
         //printDot(graph, 1);
