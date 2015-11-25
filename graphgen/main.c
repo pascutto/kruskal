@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include <time.h>
 #include "randFunc.h"
 #include "error.h"
 
@@ -69,7 +69,7 @@ graph createGraph(int n, int m, double minWeight, double maxWeight)
     else //dense graphs
     {
         //generate an array of nbE distinct edges, and add them to graph
-        id* tab = distinctRandomNumbers(0, n*n, m);
+        int* tab = distinctRandomNumbers(0, n*n, m);
 
         for(i=0; i<m; ++i)
         {
