@@ -93,14 +93,16 @@ void destroyGraph(graph graph)
 
 
 ///format the graph to the requested format and print it
-void printGraph(graph graph)
-{
-    printf("%d %d\n", graph.n, graph.m);
+void printGraph(graph graph, char *output)
+{   
+    FILE *f = fopen(output, "w");
+    fprintf(f, "%d %d\n", graph.n, graph.m);
     int i;
     for(i=0; i<graph.m; ++i)
     {
-        printf("%d %d %lf\n", graph.edges[i].x, graph.edges[i].y, graph.edges[i].w);
+        fprintf(f, "%d %d %lf\n", graph.edges[i].x, graph.edges[i].y, graph.edges[i].w);
     }
+    fclose(f);
 }
 
 ///format a graph for graphviz
@@ -122,16 +124,16 @@ void printDot(graph g, int w)
 
 int main(int argc, char **argv)
 {
-    if(argc!=5)
+    if(argc!=6)
     {
-        printf("Usage: graphgen nbVertice nbEdges minWeight maxWeight\n");
+        printf("Usage: graphgen nbVertice nbEdges minWeight maxWeight outputName\n");
     }
     else
     {
         srand(time(NULL));
         graph graph = createGraph(atoi(argv[1]), atoi(argv[2]), atof(argv[3]), atof(argv[4]));
 
-        printGraph(graph);
+        printGraph(graph, argv[5]);
         //printDot(graph, 1);
 
         destroyGraph(graph);
