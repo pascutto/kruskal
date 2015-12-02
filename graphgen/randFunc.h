@@ -3,15 +3,10 @@
 
 #include "stdlib.h"
 
-typedef size_t id;
+int uniformDistributionInt(int min, int max);
 
-///uniform integer distribution between min (included) and max (excluded)
-int uniformDistribInt(int min, int max);
+double uniformDistributionDouble(double min, double max);
 
-double uniformDistribDouble(double min, double max);
-
-///return an array of nbElems distinct random numbers between min (included) and max (excluded)
-int* distinctRandomNumbers(int min, int max, int nbElems);
-
+int* randomPermutation(int n);
 
 #endif // RANDFUNC_H_INCLUDED

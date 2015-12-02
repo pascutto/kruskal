@@ -1,44 +1,32 @@
 #include <time.h>
 #include <math.h>
-
 #include "randFunc.h"
 #include "error.h"
-#include "sort.h"
 
-int uniformDistribInt(int min, int max)
-{
-    return (int)((rand() / (double)RAND_MAX) * (max - min)) + min;
+int uniformDistributionInt(int min, int max) {
+    return (int)((rand() / ((double)RAND_MAX + 1)) * (max - min)) + min;
 }
 
-double uniformDistribDouble(double min, double max)
-{
-    return (rand() / (double)RAND_MAX) * (max - min) + min;
+double uniformDistributionDouble(double min, double max) {
+    return (rand() / ((double)RAND_MAX + 1)) * (max - min) + min;
 }
 
-int* distinctRandomNumbers(int min, int max, int nbElems)
-{
-    int l = max-min;
+int* randomPermutation(int n) {
+    int *tab; 
+    tab = malloc(sizeof(int) * n);
+    if (tab == NULL)
+        error("Impossible d'allouer le tableau de la permutation.");
 
-    int* tab;
-    tab = malloc(sizeof(int)*l);
-    if(tab==NULL)
-        error("Impossible d'allouer le tableau de nombres distincts");
+    int i;
+    for (i = 0; i < n; ++i)
+        tab[i] = i;
 
-    //create a array with the elements 0..(l-1)
-	int i;
-    for(i=0; i<l; ++i)
-    {
-        tab[i] = i+min;
-    }
-
-    //shuffling the array
-    for(i=0; i<l; ++i)
-    {
-        int j = uniformDistribInt(0, l);
-        int tmp = tab[i];
+    for (i = 0; i < n; ++i) {
+        int j = uniformDistributionInt(0, i + 1);
+        int aux = tab[i];
         tab[i] = tab[j];
-        tab[j] = tmp;
+        tab[j] = aux;
     }
 
-    return (int*)realloc(tab, sizeof(int)*nbElems);
+    return tab;
 }
