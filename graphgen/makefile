@@ -1,4 +1,4 @@
-TARGET = kruskal.out 
+TARGET = graphgen.out 
 LIBS = -lm
 CC = gcc
 CFLAGS = -g -Wall
