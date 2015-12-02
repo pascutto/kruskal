@@ -96,7 +96,7 @@ int main(int argc, char **argv) {
         graph graph = createGraph(atoi(argv[1]), atoi(argv[2]), atof(argv[3]), atof(argv[4]));
 
         printGraph(graph, argv[5]);
-        printDot(graph, 1);
+        //printDot(graph, 1);
 
         destroyGraph(graph);
     }
