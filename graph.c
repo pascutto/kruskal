@@ -61,7 +61,7 @@ graph* read_from_file(char* fileName) {
 
 edge* edge_array_of_graph(graph* g) {
     edge* v = NULL;
-    v =	malloc(g->m * sizeof(edge));
+    v =	malloc(g->m * 2 * sizeof(edge));
 	check_alloc(v);
     
     int pc = 0;
@@ -70,19 +70,17 @@ edge* edge_array_of_graph(graph* g) {
     for (i = 0; i < g->n; ++i) {
         elem* current = g->adj[i];
 
-        for (current; current != NULL; current = current->next)
-            if (current->y >= i) {
-                edge* e = NULL;
-				e = malloc(sizeof(edge));
-				check_alloc(e);
+        for (current; current != NULL; current = current->next) {
+            edge* e = NULL;
+			e = malloc(sizeof(edge));
+			check_alloc(e);
 
-                e->x = i;
-                e->y = current->y;
-                e->w = current->w;
-                v[pc] = *e;
-                pc++;
-            }
-                
+            e->x = i;
+            e->y = current->y;
+            e->w = current->w;
+            v[pc] = *e;
+            pc++;
+        }
     }
     
     return v;
