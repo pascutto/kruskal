@@ -12,21 +12,19 @@ int compress(int node) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-		fprintf(stderr, "Missing argument : file name required.\n");
-		exit(EXIT_FAILURE);
-	}
-	
+    if (argc != 3) {
+		fprintf(stderr, "Missing argument. Expected format: in_file out_file\n");
+	    return 0;
+    }
 	
 	if (!(freopen(argv[1], "r", stdin))) {
-		fprintf(stderr, "Unable to open file.\n");
-		exit(EXIT_FAILURE);
-	}	
-	argv[1][(strlen(argv[1]))-2] = 'o';
-	argv[1][(strlen(argv[1]))-1] = 'k';
-	if (!(freopen(argv[1], "w", stdout))) {
-		fprintf(stderr, "Unable to write file.\n");
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "Unable to open read file.\n");
+	    return 0;
+    }
+
+	if (!(freopen(argv[2], "w", stdout))) {
+		fprintf(stderr, "Unable to open write file.\n");
+		return 0;
 	}
 
     int n, m;
@@ -48,7 +46,6 @@ int main(int argc, char* argv[]) {
     }
 
     double ans = 0;
-    vector < pair < int, int > > v;
     for (int i = 0; i < (int)edges.size(); ++i) {
         int rx = compress(edges[i].second.first);
         int ry = compress(edges[i].second.second);
@@ -60,16 +57,11 @@ int main(int argc, char* argv[]) {
                 parent[rx] = ry;
                 rk[ry] += rk[rx];
             }
-            v.push_back(edges[i].second);
             ans += edges[i].first;
         }
     } 
 
     printf("%lf\n", ans);
-    /*printf("%d\n", (int)v.size());
-
-    for (int i = 0; i < v.size(); ++i)
-        printf("%d %d\n", v[i].first, v[i].second); */
-
+    
     return 0;
 }
