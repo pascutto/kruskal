@@ -28,10 +28,10 @@ pair < bool, double > find_in_edges(int x, int y) {
     int step = 1 << 20, i;
 
     for (i = 0; step; step >>= 1)
-        if (i + step < edges.size() && (edges[i + step].first < x || (edges[i + step].first == x && edges[i + step].second.first < y)))
+        if (i + step < (int)edges.size() && (edges[i + step].first < x || (edges[i + step].first == x && edges[i + step].second.first < y)))
             i += step;
 
-    if (i + 1 < edges.size() && edges[i + 1].first == x && edges[i + 1].second.first == y)
+    if (i + 1 < (int)edges.size() && edges[i + 1].first == x && edges[i + 1].second.first == y)
         return make_pair(true, edges[i + 1].second.second);
 
     return make_pair(false, 0);

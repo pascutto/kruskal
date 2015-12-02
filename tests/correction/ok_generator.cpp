@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
 
     double ans = 0;
     vector < pair < int, int > > v;
-    for (int i = 0; i < edges.size(); ++i) {
+    for (int i = 0; i < (int)edges.size(); ++i) {
         int rx = compress(edges[i].second.first);
         int ry = compress(edges[i].second.second);
         if (rx != ry) {
