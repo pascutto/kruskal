@@ -1,10 +1,11 @@
 #include "graph.h"
 #include "kruskal.h"
+#include "tsp.h"
 #include <stdio.h>
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
-        fprintf(stderr, "Missing argument. Expected format: in_file out_file job. (job should be 0 for Kruskal or 1 for Trading Salesman)\n");
+        fprintf(stderr, "Missing argument. Expected format: in_file out_file job. (job should be 0 for Kruskal or anything else for Trading Salesman)\n");
         return 0;
     }
 
@@ -25,7 +26,16 @@ int main(int argc, char* argv[]) {
             fprintf(f, "%d %d %lf\n", edg[i].x, edg[i].y, edg[i].w);
     
         free_edges(edg);
-    } else {
+    } else {        
+        int* order = trading_salesman_problem(g);
+        double ans = cost_trading_salesman_problem(order, g);
+        
+        int i;
+        for (i = 0; i < g->n; ++i)
+            fprintf(f, "%d->", order[i]);
+        fprintf(f, "%d\n", order[0]);
+
+        fprintf(f, "%lf\n", ans);
     }
 
     free_graph(g);
