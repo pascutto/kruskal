@@ -1,7 +1,8 @@
-#include <cstdio>
+#include <fstream>
+#include <iostream>
 #include <algorithm>
 #include <vector>
-#include <string.h>
+#include <string>
 
 using namespace std;
 
@@ -13,28 +14,30 @@ int compress(int node) {
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
-		fprintf(stderr, "Missing argument. Expected format: in_file out_file\n");
+		cerr << "Missing argument. Expected format: in_file out_file\n";
 	    return 0;
     }
 	
-	if (!(freopen(argv[1], "r", stdin))) {
-		fprintf(stderr, "Unable to open read file.\n");
+	ifstream in(argv[1]);
+    if (!in.is_open()) {
+		cerr << "Unable to open read file.\n";
 	    return 0;
     }
 
-	if (!(freopen(argv[2], "w", stdout))) {
-		fprintf(stderr, "Unable to open write file.\n");
+    ofstream out(argv[2]); 
+    if (!out.is_open()) {
+		cerr << "Unable to open write file.\n";
 		return 0;
 	}
 
     int n, m;
-    scanf("%d%d", &n, &m);
+    in >> n >> m;
     
     vector < pair < double, pair < int, int > > > edges;
     for (int i = 0; i < m; ++i) {
         int x, y;
         double w;
-        scanf("%d%d%lf", &x, &y, &w);
+        in >> x >> y >> w;
         edges.push_back(make_pair(w, make_pair(x, y)));
     }
 
@@ -61,7 +64,7 @@ int main(int argc, char* argv[]) {
         }
     } 
 
-    printf("%lf\n", ans);
+    out << ans;
     
     return 0;
 }

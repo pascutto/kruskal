@@ -1,4 +1,5 @@
-#include <cstdio>
+#include <fstream>
+#include <iostream>
 #include <vector>
 #include <algorithm>
 
@@ -40,50 +41,46 @@ bool find_in_edges(int x, int y, double w) {
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
-        fprintf(stderr, "Missing argument. Expected format: in_file ok_file out_file\n");
+        cerr << "Missing argument. Expected format: in_file ok_file out_file\n";
         return 0;
     }
 
-    freopen(argv[1], "r", stdin);
+    ifstream in(argv[1]);
     int n, m;
-    scanf("%d%d", &n, &m);
+    in >> n >> m;
 
     for (int i = 0; i < m; ++i) {
         int x, y;
         double w;
-        scanf("%d%d%lf", &x, &y, &w);
+        in >> x >> y >> w;
         edges.push_back(make_pair(x, make_pair(y, w)));
     }
     
     sort(edges.begin(), edges.end());
 
-    fclose(stdin);
-
-    freopen(argv[2], "r", stdin); 
+    ifstream ok(argv[2]); 
 
     double answer;
-    scanf("%lf", &answer);
+    ok >> answer;
 
-    fclose(stdout);
-
-    freopen(argv[3], "r", stdin);
+    ifstream out(argv[3]);
     
     double user_answer;
-    scanf("%lf", &user_answer);
+    out >> user_answer;
 
     if (!equal(user_answer, answer)) {
-        fprintf(stderr, "WA: Not a Minimum Spanning Tree.\n");
+        cerr << "WA: Not a Minimum Spanning Tree.\n";
         return 0;
     }
 
     int edg;
-    scanf("%d", &edg);
+    out >> edg;
 
     if (edg > n - 1) {
-        fprintf(stderr, "WA: Not a Tree.\n");
+        cerr << "WA: Not a Tree.\n";
         return 0;
     } else if (edg < n - 1) {
-        fprintf(stderr, "WA: Not connex.\n");
+        cerr << "WA: Not connex.\n";
         return 0;
     }
 
@@ -93,10 +90,10 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < edg; ++i) {
         int x, y;
         double w;
-        scanf("%d%d%lf", &x, &y, &w);
+        out >> x >> y >> w;
 
         if (!(find_in_edges(x, y, w) || find_in_edges(y, x, w))) {
-            fprintf(stderr, "WA: Illegal edge %d->%d %lf.\n", x, y, w);
+            cerr << "WA: Illegal edge %d->%d %lf.\n", x, y, w;
             return 0;
         }
 
@@ -104,13 +101,13 @@ int main(int argc, char* argv[]) {
         int ry = compress(y);
 
         if (rx == ry) {
-            fprintf(stderr, "WA: Not a tree.\n");
+            cerr << "WA: Not a tree.\n";
             return 0;
         }
 
         parent[rx] = ry;
     }
 
-    fprintf(stderr, "OK\n");
+    cerr << "OK\n";
     return 1;
 }

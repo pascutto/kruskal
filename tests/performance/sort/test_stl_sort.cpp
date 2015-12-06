@@ -1,4 +1,4 @@
-#include <cstdio>
+#include <iostream>
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
@@ -35,7 +35,7 @@ int main() {
     sort(v, v + n + 1, edge_less());
     end = clock();
 
-    printf("Time: %lf\n", (double) (end - begin) / CLOCKS_PER_SEC);
+    cout << "Time: " << (double) (end - begin) / CLOCKS_PER_SEC << "\n";
 
     return 0;
 }
