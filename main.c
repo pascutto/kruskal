@@ -5,14 +5,14 @@
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
-        fprintf(stderr, "Missing argument. Expected format: in_file out_file job. (job should be 0 for Kruskal or anything else for Trading Salesman)\n");
+        fprintf(stderr, "Missing argument. Expected format: job in_file out_file. (job should be 0 for Kruskal or 1 for Trading Salesman)\n");
         return 0;
     }
 
-    graph* g = read_from_file(argv[1]);
-    FILE *f = fopen(argv[2], "w");
+    graph* g = read_from_file(argv[2]);
+    FILE *f = fopen(argv[3], "w");
 
-    if (atoi(argv[3]) == 0) {
+    if (atoi(argv[1]) == 0) {
         edge* edg = kruskal_graph(g);
     
         int i;
@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
             fprintf(f, "%d %d %lf\n", edg[i].x, edg[i].y, edg[i].w);
     
         free_edges(edg);
-    } else {        
+    } else if (atoi(argv[1]) == 1) {        
         int* order = trading_salesman_problem(g);
         double ans = cost_trading_salesman_problem(order, g);
         
@@ -36,6 +36,9 @@ int main(int argc, char* argv[]) {
         fprintf(f, "%d\n", order[0]);
 
         fprintf(f, "%lf\n", ans);
+    } else {
+        printf("Illegal job id.");
+        return 0;
     }
 
     free_graph(g);
