@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
         
         int i;
         for (i = 0; i < g->n; ++i)
-            fprintf(f, "%d->", order[i]);
+            fprintf(f, "%d ", order[i]);
         fprintf(f, "%d\n", order[0]);
 
         fprintf(f, "%lf\n", ans);
