@@ -52,5 +52,4 @@ int merge(unionfind* uf, int x, int y) {
 void free_uf(unionfind* uf) {
     free(uf->parent);
     free(uf->rank);
-    free(uf);
 }

@@ -22,13 +22,13 @@ edge* kruskal_edges(int n, int m, edge* v) {
 			pos++;
 		}
     
-    //free_uf(&uf);
+    free_uf(&uf);
     return ans;
 }   
 
 edge* kruskal_graph(graph* g) {
     edge* edges = edge_array_of_graph(g);
     edge* ans = kruskal_edges(g->n, g->m, edges);
-    //free_edges(edges); FIXME: free not working as expected
+    free_edges(edges);
     return ans;
 }
