@@ -131,12 +131,12 @@ int main(int argc, char **argv) {
     if (argc < 2) {
         printf("Mandatory parameter is missing. 0 - Generate Kruskal testcase; 1 - Generate Trading Salesman testcase.\n");
     } else if (atoi(argv[1]) == 0) {
-        if (argc != 6)
+        if (argc != 7)
             printf("Usage: 0 nbNodes nbEdges minWeight maxWeight outputName.\n");
         else {
             graph graph = createGraph(atoi(argv[2]), atoi(argv[3]), atof(argv[4]), atof(argv[5]));
 
-            printGraph(&graph, argv[5]);
+            printGraph(&graph, argv[6]);
             //printDot(&graph, 1);
 
             destroyGraph(&graph);
