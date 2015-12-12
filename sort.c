@@ -1,6 +1,6 @@
 #include "sort.h"
 
-const int kMinLength = 30;
+const int kMinLength = 20;
 
 void swap(edge* v, int i, int j) {
 	edge aux = v[i];
@@ -39,6 +39,17 @@ void quick_sort(edge* v, int left, int right, int minLength) {
 	}
 }
 
+int quick_sort_bound(edge* v, int left, int right, int minLength) {
+    return (right - left + 1) * (right - left + 1);
+    /*
+        Let N be the length of vector to be sorted.
+        Worst case complexity: O(N^2) 
+            see "The Worst Case Permutation for Median-of-Three Quicksort", Hannu Erkio, 
+                The Computer Journal, Vol. 27, No. 3, 1984
+        Average-case: if N > minlength - O(N * log(N)), otherwise - O(N^2)
+    */
+}
+
 int partition(edge* v, int left, int right) {
 	edge pivot = v[right]; 
 	int i = left;
@@ -65,10 +76,22 @@ void insertion_sort(edge* v, int left, int right) {
 	}
 }
 
+int insertion_sort_bound(edge* v, int left, int right) {
+    return (right - left + 1) * (right - left + 1);
+    /* 
+        Let N be the length of the vector to be sorted.
+        Complexity: O(N^2)
+    */
+}
+
 void test_sort(edge* v, int length, int minLength) {
     quick_sort(v, 0, length - 1, minLength);
 }
 
 void sort(edge* v, int length) {
 	quick_sort(v, 0, length - 1, kMinLength);
+}
+
+int sort_bound(edge* v, int length) {
+    return length * length;
 }

@@ -3,6 +3,12 @@
 #include "tsp.h"
 #include <stdio.h>
 
+int main_bound(int job, graph* g) {
+    if (job == 0) 
+        return kruskal_graph_bound(g) + g->n;
+    return travelling_salesman_problem_bound(g) + cost_travelling_salesman_problem_bound(travelling_salesman_problem(g), g);
+}
+
 int main(int argc, char* argv[]) {
     if (argc != 4) {
         fprintf(stderr, "Missing argument. Expected format: job in_file out_file. (job should be 0 for Kruskal or 1 for Trading Salesman)\n");
@@ -27,8 +33,8 @@ int main(int argc, char* argv[]) {
     
         free_edges(edg);
     } else if (atoi(argv[1]) == 1) {        
-        int* order = trading_salesman_problem(g);
-        double ans = cost_trading_salesman_problem(order, g);
+        int* order = travelling_salesman_problem(g);
+        double ans = cost_travelling_salesman_problem(order, g);
         
         int i;
         for (i = 0; i < g->n; ++i)

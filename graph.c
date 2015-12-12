@@ -86,6 +86,10 @@ edge* edge_array_of_graph(graph* g) {
     return v;
 }
 
+int edge_array_of_graph_bound(graph* g) {
+    return g->m + g->n;
+}
+
 void free_list(list l) {
     while (l != NULL) {
         list aux = l -> next;

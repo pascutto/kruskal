@@ -30,4 +30,7 @@ void free_list(list l);
 void free_graph(graph* g);
 void free_edges(edge* ed);
 
+// BOUNDS
+int edge_array_of_graph_bound(graph* g);
+
 #endif
