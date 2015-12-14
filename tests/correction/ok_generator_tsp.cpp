@@ -7,6 +7,7 @@ DISCLAIMER:
 #include <vector>
 #include <algorithm>
 #include <limits>
+#include <iomanip>
 
 using namespace std;
 
@@ -58,7 +59,7 @@ int main(int argc, char* argv[]) {
             ans = ansc;
     }
 
-    out << ans;
+    out << fixed << setprecision(7) << ans;
 
     return 0;
 }

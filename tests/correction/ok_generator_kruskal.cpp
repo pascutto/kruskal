@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 
@@ -63,7 +64,7 @@ int main(int argc, char* argv[]) {
         }
     } 
 
-    out << ans;
+    out << fixed << setprecision(7) << ans;
     
     return 0;
 }
