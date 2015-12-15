@@ -28,5 +28,3 @@ In order to test the TSP 2-approximation Algorithm, use:
 `./test.sh tsp <verif> <nbNodes>`
 
 - `<verif>` should be 1 if you want the output to be verified, 0 otherwise.
-
-_WARNING: For more than 10 nodes, the backtracking which generates the best answer won't work in a "reasonable" time._
