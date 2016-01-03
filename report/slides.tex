@@ -1,6 +1,9 @@
 \documentclass[handout]{beamer}
 
 \usepackage[utf8]{inputenc}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage[french]{babel}
 
 \usetheme{Warsaw}
 
@@ -21,5 +24,142 @@ problème du voyageur de commerce}
 		\frametitle{Sommaire}
 		\tableofcontents
 	\end{frame}
+
+	\section{Outils}
+
+		\subsection{Tri hybride}
+
+			%\subsubsection{Algorithme}
+			\begin{frame}
+				\frametitle{Algorithme}
+
+				On utilise un algorithme de tri rapide faisant appel à un
+				tri par insertion pour les petits tableaux.
+				\\~\\	
+				\begin{algorithm}[H]
+					\caption{Tri hybride du tableau t}
+					\begin{algorithmic}[H]
+						\IF{$taille(t) < minLength$} 
+						\STATE{trier t avec un tri par insertion;} 
+						\ELSE \STATE{
+							prendre un pivot p;\\
+							partitionner t selon le pivot p;\\
+							trier récursivement les deux tableaux obtenus;
+						}
+						\ENDIF
+					\end{algorithmic}
+				\end{algorithm}
+
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%\subsubsection{Choix de minLength}
+			\begin{frame}
+				\frametitle{Choix de \emph{minLength}}
+				
+				Le choix est fait empiriquement après plusieurs tests.
+
+				Insérer les graphes.
+
+				On retient finalement la valeur $20$.
+
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%\subsubsection{Choix du pivot}
+			\begin{frame}
+				\frametitle{Choix du pivot}
+
+				On implémente la méthode \emph{median of three} : 
+				
+				\begin{itemize}
+					\item On considère les éléments de tête, queue et
+						milieu du tableau à trier.
+					\item On ordonne ces trois éléments dans le tableau.
+					\item On prend la médiane de ces trois éléments comme
+						pivot.
+				\end{itemize}
+
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\begin{frame}
+				\frametitle{Choix du pivot}
+				\framesubtitle{Comparaison des différents choix de pivot}
+
+				Insérer les graphes.
+
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%\subsubsection{Complexité}
+			\begin{frame}
+				\frametitle{Complexité}
+
+				Insérer les graphes.
+
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\subsection{Union-Find}
+			\begin{frame}
+				\frametitle{Présentation de la structure Union-Find}
+		
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\begin{frame}
+				\frametitle{Première optimisation}
+
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\begin{frame}
+				\frametitle{Seconde optimisation}
+
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\subsection{Générateur de graphes}
+			\begin{frame}
+				\frametitle{Contraintes du générateur}
+				On doit créer un graphe :
+				\begin{itemize}
+					\item avec un nombre fixé de sommets
+					\item avec un nombre fixé d'arêtes
+					\item connexe
+					\item uniformément distribué
+					\item rapidement
+				\end{itemize}
+				Notre algorithme permet une telle génération en temps linéaire.
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\begin{frame}
+				\frametitle{Algorithme}
+				
+				\begin{algorithm}[H]
+					\caption{Génération d'un graphe à n sommets
+					et m arêtes}
+					\begin{algorithmic}[H]
+						\STATE $S,V \leftarrow \varnothing$
+						\STATE $T \leftarrow \sigma\left\{1,...,n\right\}$
+						\FORALL {sommet $i \in T$}
+						\STATE $V \leftarrow V\cup\left\{(i,rand(S))\right\}$
+						\STATE $S \leftarrow S\cup\left\{i\right\}$
+						\STATE $T \leftarrow T\backslash\left\{i\right\}$
+						\ENDFOR
+						\STATE ajouter $m-n$ arêtes aléatoires à $V$
+						\RETURN $(S,V)$
+					\end{algorithmic}
+				\end{algorithm}
+				La complexité de cet algorithme est $\mathcal{O}(m)$
+			\end{frame}
+
+	\section{Algorithme de Kruskal}
+
+	\subsection{Présentation}
+
+	\subsection{Preuve de correction}
+
+	\subsection{Complexité}
+
+	\section{Voyageur de commence}
+
+	\subsection{Algorithme}
+
+	\subsection{Complexité}
+
 
 \end{document}
