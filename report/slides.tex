@@ -1,4 +1,4 @@
-\documentclass[handout]{beamer}
+\documentclass{beamer}
 
 \usepackage[utf8]{inputenc}
 \usepackage{algorithmic}
@@ -99,19 +99,64 @@ problème du voyageur de commerce}
 		\subsection{Union-Find}
 			\begin{frame}
 				\frametitle{Présentation de la structure Union-Find}
-		
+				
+				Union-find est une structure de données utilisée pour
+				représenter une partition d'un ensemble.
+				
+				Elle a trois primitives :
+				\begin{itemize}
+					\item \texttt{new}($n$) crée une nouvelle structure
+						Union-Find de taille $n$.
+					\item \texttt{find}($x$) renvoie le représentant de
+						la classe de $x$.
+					\item \texttt{union}($x,y$) fusionne les classe de
+						$x$ et $y$.
+				\end{itemize}
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\begin{frame}
+				\frametitle{Présentation de la structure Union-Find}
+
+				Insérer exemple
 			\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			\begin{frame}
 				\frametitle{Première optimisation}
-
+					
+				
 			\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			\begin{frame}
 				\frametitle{Seconde optimisation}
 
 			\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\begin{frame}
+				\frametitle{Complexité en moyenne}
+
+				Récapitulatif des complexités de Union-Find pour $m$
+				opérations sur un structure de taille $n$ :
+				\\~\\
+				\begin{tabular}{|c|c|c|c|c|}
+					\hline
+					Primitive & $\varnothing$ & 1 & 2 & 1 \& 2
+					\\
+					\hline
+					\texttt{new} & $\mathcal{O}(n)$ & $\mathcal{O}(n)$
+					& $\mathcal{O}(n)$ & $\mathcal{O}(n)$
+					\\
+					\hline
+					\texttt{find} & $\mathcal{O}(n)$ &
+					$\mathcal{O}(\max(1,\frac
+						{\log\frac{n^{2}}{m}}
+						{\log\frac{2m}{n}}))$ &
+					$\log(n)$ & $\alpha(m,n)$ 
+					\\
+					\hline
+				\end{tabular}
+
+			\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		\subsection{Générateur de graphes}
 			\begin{frame}
 				\frametitle{Contraintes du générateur}
@@ -135,7 +180,7 @@ problème du voyageur de commerce}
 					\begin{algorithmic}[H]
 						\STATE $S,V \leftarrow \varnothing$
 						\STATE $T \leftarrow \sigma\left\{1,...,n\right\}$
-						\FORALL {sommet $i \in T$}
+						\FOR {$i \in T$}
 						\STATE $V \leftarrow V\cup\left\{(i,rand(S))\right\}$
 						\STATE $S \leftarrow S\cup\left\{i\right\}$
 						\STATE $T \leftarrow T\backslash\left\{i\right\}$
@@ -148,16 +193,88 @@ problème du voyageur de commerce}
 			\end{frame}
 
 	\section{Algorithme de Kruskal}
-
+	
 	\subsection{Présentation}
+		\begin{frame}
+			\frametitle{Présentation de l'algorithme}
+				
+			\begin{algorithm}[H]
+				\caption{Algorithme de Kruskal sur $G=(V,E)$}
+				\begin{algorithmic}[H]
+					\STATE $A \leftarrow \varnothing$
+					\STATE trier $E$ par poids croissants
+					\FOR {$(x,y,p)\in E$}
+						\IF {$x$ et $y$ ne sont pas dans la même composante
+						connexe}
+						\STATE $A \leftarrow A \cup
+						\left\{(x,y,p)\right\}$
+						\ENDIF
+					\ENDFOR
+					\RETURN $(V,A)$
+				\end{algorithmic}
+			\end{algorithm}
+		\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\begin{frame}
+			\frametitle{Exemple d'éxécution}
+
+		\end{frame}
 
 	\subsection{Preuve de correction}
-
+		\begin{frame}
+			\frametitle{Preuve de correction}
+			
+			\begin{itemize}
+				\item Le graphe renvoyé est clairement un arbre.
+				\item On va montrer par induction qu'à tout instant de
+					l'algorithme, $\mathcal{P}(A)$ : il existe un ACM
+					contenant $A$. 
+					\begin{itemize}
+						\item $\mathcal{P}(\varnothing)$ est trivialement
+							vraie.
+						\item Supposons $T$ l'ACM garanti par
+							$\mathcal{P}(A)$.\\
+							Soit $e$ la prochaine arête.\\
+							Si $e \in T$,
+							$\mathcal{P}(A\cup\left\{e\right\})$
+							est vraie.\\
+							Sinon, $T+e$ contient un cycle $C$. Soit $f
+							\in C \backslash A$.\\
+							$T-f+e$ est un ACM qui contient
+							$A\cup\left\{e\right\}$.
+					\end{itemize}
+			\end{itemize}
+		\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\subsection{Complexité}
-
+		\begin{frame}
+			\frametitle{Complexité}
+			
+			Insérer graph
+		\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\section{Voyageur de commence}
 
 	\subsection{Algorithme}
+		\begin{frame}
+			\frametitle{Algorithme}
+			
+			\begin{algorithm}[H]
+				\caption{build\_road($visited, node, edges$)}
+				\begin{algorithmic}[H]
+					\STATE $visited \leftarrow visited + node$
+					\FOR{$(x,y,p)\in$ edges}
+						\IF{$x = node$ \AND $y \ne father(node)$}
+						\STATE build\_road($visited, y, edges$)
+						\ELSE \IF{$y = node$ \AND $x \ne father(node)$}
+						\STATE build\_road($visited, v, edges$)
+						\ENDIF
+						\ENDIF
+					\ENDFOR
+				\end{algorithmic}
+			\end{algorithm}
+		
+		\end{frame}
 
 	\subsection{Complexité}
 
