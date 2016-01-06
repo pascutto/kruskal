@@ -4,6 +4,10 @@
 \usepackage{algorithmic}
 \usepackage{algorithm}
 \usepackage[french]{babel}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+\usepackage{graphics}
+\usepackage{pgfplots}
 
 \usetheme{Warsaw}
 
@@ -34,7 +38,7 @@ problème du voyageur de commerce}
 				\frametitle{Algorithme}
 
 				On utilise un algorithme de tri rapide faisant appel à un
-				tri par insertion pour les petits tableaux.
+				tri par insertion pour les petits tableaux. \pause
 				\\~\\	
 				\begin{algorithm}[H]
 					\caption{Tri hybride du tableau t}
@@ -58,8 +62,8 @@ problème du voyageur de commerce}
 				
 				Le choix est fait empiriquement après plusieurs tests.
 
-				Insérer les graphes.
-
+				\input{graphs/minlength.tex}	
+				\pause
 				On retient finalement la valeur $20$.
 
 			\end{frame}
@@ -68,12 +72,13 @@ problème du voyageur de commerce}
 			\begin{frame}
 				\frametitle{Choix du pivot}
 
-				On implémente la méthode \emph{median of three} : 
+				On implémente la méthode \emph{median of three} : \pause 
 				
 				\begin{itemize}
 					\item On considère les éléments de tête, queue et
-						milieu du tableau à trier.
+						milieu du tableau à trier. \pause
 					\item On ordonne ces trois éléments dans le tableau.
+						\pause
 					\item On prend la médiane de ces trois éléments comme
 						pivot.
 				\end{itemize}
@@ -84,16 +89,7 @@ problème du voyageur de commerce}
 				\frametitle{Choix du pivot}
 				\framesubtitle{Comparaison des différents choix de pivot}
 
-				Insérer les graphes.
-
-			\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-			%\subsubsection{Complexité}
-			\begin{frame}
-				\frametitle{Complexité}
-
-				Insérer les graphes.
-
+				\input{graphs/pivots.tex}
 			\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		\subsection{Union-Find}
@@ -101,14 +97,14 @@ problème du voyageur de commerce}
 				\frametitle{Présentation de la structure Union-Find}
 				
 				Union-find est une structure de données utilisée pour
-				représenter une partition d'un ensemble.
+				représenter une partition d'un ensemble. \pause
 				
-				Elle a trois primitives :
+				Elle a trois primitives : \pause
 				\begin{itemize}
 					\item \texttt{new}($n$) crée une nouvelle structure
-						Union-Find de taille $n$.
+						Union-Find de taille $n$. \pause
 					\item \texttt{find}($x$) renvoie le représentant de
-						la classe de $x$.
+						la classe de $x$. \pause
 					\item \texttt{union}($x,y$) fusionne les classe de
 						$x$ et $y$.
 				\end{itemize}
@@ -117,12 +113,99 @@ problème du voyageur de commerce}
 			\begin{frame}
 				\frametitle{Présentation de la structure Union-Find}
 
-				Insérer exemple
+				\begin{enumerate}
+					\item \texttt{new(5)} 
+						\hfill
+						\begin{tikzpicture}
+							\node (0) {0};
+							\node (1) [right of=0] {1};
+							\node (2) [right of=1] {2};
+							\node (3) [right of=2] {3};
+							\node (4) [right of=3] {4};
+						\end{tikzpicture}
+						\pause
+					\item \texttt{union(1,3)}
+						\hfill
+						\begin{tikzpicture}[level distance=20pt]
+							\node (0) {0}
+								child{node{3}};
+							\node (1) [right of=0] {1};
+							\node (2) [right of=1] {2};
+							\node (4) [right of=2] {4};
+						\end{tikzpicture}
+						\pause
+					\item \texttt{union(3,2) \&\& union(1,4)}
+						\hfill
+						\begin{tikzpicture}[baseline=(3.base),level distance=20pt]
+							\node (0) {0}
+							child{node(3){3} 
+									child{node{2}}
+								};
+							\node (1) [right of=0] {1}
+								child{node{4}};
+						\end{tikzpicture}
+						\pause			
+					\item \texttt{union(1,0)}
+						\hfill
+						\begin{tikzpicture}[baseline=(0.base),level distance=20pt]
+							\node (1) {1}
+							child{node(0){0}
+									child{node{3} 
+										child{node{2}}
+									}
+								}
+								child{node{4}};
+						\end{tikzpicture}
+				\end{enumerate}
+
 			\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			\begin{frame}
 				\frametitle{Première optimisation}
-					
+				On modifie l'opération \texttt{union} pour réduire la
+				profondeur de l'arbre.\pause
+				\\~\\
+				Exemple sur l'opération \texttt{union(3,2)} :
+				\\~\\
+				\begin{columns}[c]
+					\begin{column}{0.46\textwidth}
+						\begin{center}
+						\begin{tikzpicture}[baseline=(0.base),level distance=20pt]
+							\node (0) {0}
+								child{node{3}};
+							\node [right of=0] {2};
+						\end{tikzpicture}
+						$\longrightarrow$					
+						\begin{tikzpicture}[baseline=(0.base),level distance=20pt]
+							\node (0) {0}
+							child{node(3){3} 
+									child{node{2}}
+								};
+						\end{tikzpicture}
+					\end{center}
+					\end{column}
+					\vrule{}
+					\pause
+					\begin{column}{0.46\textwidth}
+						\begin{center}
+						\begin{tikzpicture}[baseline=(0.base),level distance=20pt]
+							\node (0) {0}
+								child{node{3}};
+							\node [right of=0] {2};
+						\end{tikzpicture}
+						$\longrightarrow$					
+						\begin{tikzpicture}[baseline=(0.base),level distance=20pt]
+							\node (0) {0}
+								child{node{3}} 
+								child{node{2}}
+							;
+						\end{tikzpicture}
+						\end{center}
+					\end{column}
+			\end{columns}
+			\pause
+			~\\~\\
+			C'est l'optimisation de compression	de chemins.
 				
 			\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -130,7 +213,7 @@ problème du voyageur de commerce}
 				\frametitle{Seconde optimisation}
 
 			\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			\begin{frame}
 				\frametitle{Complexité en moyenne}
 
@@ -162,11 +245,11 @@ problème du voyageur de commerce}
 				\frametitle{Contraintes du générateur}
 				On doit créer un graphe :
 				\begin{itemize}
-					\item avec un nombre fixé de sommets
-					\item avec un nombre fixé d'arêtes
-					\item connexe
-					\item uniformément distribué
-					\item rapidement
+					\item avec un nombre fixé de sommets \pause
+					\item avec un nombre fixé d'arêtes \pause
+					\item connexe \pause
+					\item uniformément distribué \pause
+					\item rapidement \pause
 				\end{itemize}
 				Notre algorithme permet une telle génération en temps linéaire.
 			\end{frame}
@@ -189,11 +272,12 @@ problème du voyageur de commerce}
 						\RETURN $(S,V)$
 					\end{algorithmic}
 				\end{algorithm}
+				\pause
 				La complexité de cet algorithme est $\mathcal{O}(m)$
 			\end{frame}
 
 	\section{Algorithme de Kruskal}
-	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\subsection{Présentation}
 		\begin{frame}
 			\frametitle{Présentation de l'algorithme}
@@ -217,9 +301,30 @@ problème du voyageur de commerce}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		\begin{frame}
 			\frametitle{Exemple d'éxécution}
+			\begin{center}
+			\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node
+				distance=2.8cm,]
+			
+				\node[draw,circle] (1)					{$1$};
+				\node[draw,circle] (2) [right of=1]		{$2$};
+				\node[draw,circle] (3) [above right of=2] {$3$};
+				\node[draw,circle] (4) [below right of=2] {$4$};
 
+				\path<1,2,3,4,5,6> (1) edge node {10} (2);
+				\path<1,2,3>    (2) edge node {4}  (3);
+				\path<1> (2) edge node {1}  (4);
+				\path<1,2,3,4,5> (3) edge node {7}  (4);
+				\path<2>[draw=red]	 (2) edge node {1} (4);
+				\path<3,4,5,6,7,8>[draw=green] (2) edge node {1} (4);
+				\path<4>[draw=red]   (2) edge node {4} (3);
+				\path<5,6,7,8>[draw=green] (2) edge node {4} (3);
+				\path<6,7,8>[draw=red]   (3) edge node {7} (4);
+				\path<7>[draw=red]   (1) edge node {10} (2);
+				\path<8>[draw=green] (1) edge node {10} (2);
+				\end{tikzpicture}
+			\end{center}
 		\end{frame}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\subsection{Preuve de correction}
 		\begin{frame}
 			\frametitle{Preuve de correction}
@@ -273,7 +378,7 @@ problème du voyageur de commerce}
 					\ENDFOR
 				\end{algorithmic}
 			\end{algorithm}
-		
+			
 		\end{frame}
 
 	\subsection{Complexité}
