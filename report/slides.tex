@@ -92,6 +92,13 @@ problème du voyageur de commerce}
 				\input{graphs/pivots.tex}
 			\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\begin{frame}
+				\frametitle{Complexité}
+				
+				\input{graphs/sort.tex}
+			\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		\subsection{Union-Find}
 			\begin{frame}
 				\frametitle{Présentation de la structure Union-Find}
@@ -124,7 +131,7 @@ problème du voyageur de commerce}
 							\node (4) [right of=3] {4};
 						\end{tikzpicture}
 						\pause
-					\item \texttt{union(1,3)}
+					\item \texttt{union(0,3)}
 						\hfill
 						\begin{tikzpicture}[level distance=20pt]
 							\node (0) {0}
@@ -211,6 +218,59 @@ problème du voyageur de commerce}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			\begin{frame}
 				\frametitle{Seconde optimisation}
+				On modifie l'opération \texttt{union} pour réduire la profondeur
+				de l'arbre.\pause
+				\\~\\
+				Exemple sur l'opération \texttt{union(1,0)} :
+				\\~\\
+				\begin{columns}[c]
+					\begin{column}{0.46\textwidth}
+						\begin{center}
+						\begin{tikzpicture}[baseline=(0.base),level distance=20pt]
+						\node (0) {0}
+							child{node(3){3} 
+									child{node{2}}
+								};
+							\node (1) [right of=0] {1}
+								child{node{4}};
+						\end{tikzpicture}
+						$\longrightarrow$					
+						\begin{tikzpicture}[baseline=(1.base),level distance=20pt]
+							\node (1) {1}
+							child{node(0){0}
+									child{node{3} 
+										child{node{2}}
+									}
+								}
+								child{node{4}};
+						\end{tikzpicture}
+						\end{center}
+					\end{column}
+					\vrule{}
+					\pause
+					\begin{column}{0.46\textwidth}
+						\begin{center}
+						\begin{tikzpicture}[baseline=(0.base),level distance=20pt]
+							\node (0) {0}
+							child{node(3){3} 
+									child{node{2}}
+								};
+							\node (1) [right of=0] {1}
+								child{node{4}};
+						\end{tikzpicture}
+						$\longrightarrow$					
+						\begin{tikzpicture}[baseline=(1.base),level distance=20pt]
+							\node (1) {0}
+							child{node{3} 
+									child{node{2}}
+							}
+							child{node{1}
+								child{node{4}}
+							};
+						\end{tikzpicture}
+						\end{center}
+					\end{column}
+			\end{columns}
 
 			\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -355,7 +415,7 @@ problème du voyageur de commerce}
 		\begin{frame}
 			\frametitle{Complexité}
 			
-			Insérer graph
+			\input{graphs/kruskal.tex}	
 		\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\section{Voyageur de commence}
@@ -379,9 +439,15 @@ problème du voyageur de commerce}
 				\end{algorithmic}
 			\end{algorithm}
 			
+			
 		\end{frame}
 
 	\subsection{Complexité}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{frame}
+		\frametitle{Complexité}
 
+		\input{graphs/tsp.tex}
+	\end{frame}
 
 \end{document}
