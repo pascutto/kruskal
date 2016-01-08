@@ -366,7 +366,7 @@ problème du voyageur de commerce}
 				distance=2.8cm,]
 			
 				\node[draw,circle] (1)					{$1$};
-				\node[draw,circle] (2) [right of=1]		{$2$};
+				\node[draw,circle] (2) [right=5cm]		{$2$};
 				\node[draw,circle] (3) [above right of=2] {$3$};
 				\node[draw,circle] (4) [below right of=2] {$4$};
 
@@ -439,15 +439,45 @@ problème du voyageur de commerce}
 				\end{algorithmic}
 			\end{algorithm}
 			
-			
 		\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\begin{frame}
+			\frametitle{Exemple d'éxécution}
 
-	\subsection{Complexité}
+			\begin{center}
+				\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node
+				distance=2.8cm,]
+			
+				\node[draw,circle] (1)					{$1$};
+				\node[draw,circle] (2) [right=5cm]		{$2$};
+				\node[draw,circle] (3) [above right of=2] {$3$};
+				\node[draw,circle] (4) [below right of=2] {$4$};
+
+				\path<1,2,3,4,5,6> (1) edge node {7} (2);
+				\path<1,2,3>    (2) edge node {3}  (3);
+				\path<1> (2) edge node {3}  (4);
+				\path<1,2,3,4,5> (3) edge node {4}  (4);
+				\path<1,2,3,4,5,6,7,8> (1) edge node {8}  (3);
+				\path<1,2,3,4,5,6,7,8,9> (1) edge node {8}  (4);
+				\path<2>[draw=red]	 (2) edge node {3} (4);
+				\path<3,4,5,6,7,8,9,10>[draw=green] (2) edge node {3} (4);
+				\path<4>[draw=red]   (2) edge node {3} (3);
+				\path<5,6,7,8,9,10>[draw=green] (2) edge node {3} (3);
+				\path<6,7,8,9,10>[draw=red]   (3) edge node {4} (4);
+				\path<7>[draw=red]   (1) edge node {7} (2);
+				\path<8,9,10>[draw=green] (1) edge node {7} (2);
+				\path<9,10>[draw=red] (1) edge node {8} (3);
+				\path<10>[draw=red] (1) edge node {8} (4);
+				\end{tikzpicture}
+			\end{center}
+
+		\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\begin{frame}
 		\frametitle{Complexité}
 
 		\input{graphs/tsp.tex}
 	\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
